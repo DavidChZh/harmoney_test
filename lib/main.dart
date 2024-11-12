@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
+        '/other': (context) => const Other(),
         '/login': (context) => const LoginPage(),
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -51,10 +52,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _incrementCounter() {
-    Navigator.pushNamed(context, '/login');
-  }
-
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -78,22 +75,29 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                     child: Column(
-                  children: [
-                    const Text(
-                      'this is first page',
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    InkWell(
-                      onTap: _incrementCounter,
-                      child: Text(
-                        '跳转登录页',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                    ),
-                  ],
-                )),
+                      children: [
+                        const Text(
+                          'this is first page',
+                        ),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(context, '/login'),
+                          child: Text(
+                            '跳转登录页',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(context, '/other'),
+                          child: Text(
+                            '跳转其他页',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                      ],
+                    )),
                 Container(
                   color: Colors.red,
                   height: 60,
@@ -122,16 +126,45 @@ class _LoginPageState extends State<LoginPage> {
         ),
         body: Center(
             child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Expanded(
-            child: Text(
-              'this is login page',
-            ),
-          ),
-          Container(
-            color: Colors.red,
-            height: 60,
-          )
-        ])));
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Expanded(
+                child: Text(
+                  'this is login page',
+                ),
+              ),
+              Container(
+                color: Colors.red,
+                height: 60,
+              )
+            ])));
+  }
+}
+
+class Other extends StatefulWidget {
+  const Other({super.key});
+
+  @override
+  State<Other> createState() => _OtherState();
+}
+
+class _OtherState extends State<Other> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Center(
+              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Expanded(
+                  child: Text(
+                    'this is login page',
+                  ),
+                ),
+                Container(
+                  color: Colors.red,
+                  height: 60,
+                )
+              ])),
+        ));
   }
 }
